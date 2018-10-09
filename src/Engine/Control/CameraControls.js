@@ -1,14 +1,15 @@
 import { Vector2, Vector3 } from "three";
-import { Between } from "../utils/Math";
+import { Between } from "../Utils/Math";
 
 class CameraControls {
-  constructor(camera) {
+  constructor(camera, callback) {
     this.cameraRef = camera;
 
     this.mouseDown = this.mouseDown.bind(this);
     this.mouseUp = this.mouseUp.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
     this.mouseWheel = this.mouseWheel.bind(this);
+    this.onUpdate = callback || (() => {});
 
     // Event binding
     window.addEventListener("mousedown", this.mouseDown);
@@ -25,24 +26,37 @@ class CameraControls {
     this.currentPitch = 2;
     this.armLength = 30;
 
+    if (window.$hmr && window.$hmr.camera) {
+      Object.assign(this, window.$hmr.camera);
+    }
+
     // Action
     this.pivot(0, 0);
+    this.sendUpdate();
   }
 
   mouseDown(evt) {
     evt.preventDefault();
 
     if (evt.button === 0) {
-      this.pressingLeft = true;
+      this.pressingRight = true;
+
+      this.dragStart = new Vector2(evt.clientX, evt.clientY);
+    }
+
+    if (evt.button === 1) {
+      this.pressingMiddle = true;
 
       this.dragStart = new Vector2(evt.clientX, evt.clientY);
     }
 
     if (evt.button === 2) {
-      this.pressingRight = true;
+      this.pressingLeft = true;
 
       this.dragStart = new Vector2(evt.clientX, evt.clientY);
     }
+
+    this.sendUpdate();
 
     return false;
   }
@@ -51,6 +65,14 @@ class CameraControls {
     evt.preventDefault();
 
     if (evt.button === 0) {
+      this.pressingRight = false;
+    }
+
+    if (evt.button === 1) {
+      this.pressingMiddle = false;
+    }
+
+    if (evt.button === 2) {
       this.pressingLeft = false;
 
       const deltaX = evt.clientX - this.dragStart.x;
@@ -64,9 +86,7 @@ class CameraControls {
       );
     }
 
-    if (evt.button === 2) {
-      this.pressingRight = false;
-    }
+    this.sendUpdate();
 
     return false;
   }
@@ -81,6 +101,14 @@ class CameraControls {
       this.pivot(deltaX, deltaY);
     }
 
+    if (this.pressingMiddle && this.cameraRef) {
+      const deltaY = evt.clientY - this.dragStart.y;
+
+      this.dragStart.y = evt.clientY;
+
+      this.ascend(-deltaY);
+    }
+
     if (this.pressingRight && this.cameraRef) {
       const deltaX = evt.clientX - this.dragStart.x;
       const deltaY = evt.clientY - this.dragStart.y;
@@ -91,6 +119,8 @@ class CameraControls {
       this.move(deltaX, deltaY);
     }
 
+    this.sendUpdate();
+
     return false;
   }
 
@@ -100,6 +130,8 @@ class CameraControls {
       (evt.wheelDeltaY / 30) * (Math.max(0.5, this.armLength) * 0.05);
     this.armLength = Math.max(0.00001, this.armLength);
     this.pivot(0, 0);
+
+    this.sendUpdate();
 
     return false;
   }
@@ -135,6 +167,23 @@ class CameraControls {
     this.refPoint.z += (-deltaY / 50) * sin + (deltaX / 50) * cos;
 
     this.pivot(0, 0);
+  }
+
+  ascend(deltaY) {
+    this.refPoint.y += deltaY / 50;
+
+    this.pivot(0, 0);
+  }
+
+  sendUpdate() {
+    this.onUpdate({
+      pressingLeft: this.pressingLeft,
+      dragStart: this.dragStart,
+      refPoint: this.refPoint,
+      currentYaw: this.currentYaw,
+      currentPitch: this.currentPitch,
+      armLength: this.armLength
+    });
   }
 }
 

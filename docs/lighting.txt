@@ -1,0 +1,3 @@
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/
+
+http://www.chinedufn.com/webgl-shadow-mapping-tutorial/
