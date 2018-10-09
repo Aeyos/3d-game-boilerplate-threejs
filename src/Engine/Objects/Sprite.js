@@ -15,7 +15,7 @@ class AugmentedSprite extends FeaturedClass(Sprite) {
     // this.spriteMap = spriteMap;
     // this.spriteMaterial = spriteMaterial;
 
-    this.collision = new Collision2D();
+    // this.collision = new Collision2D();
   }
 }
 export default AugmentedSprite;

@@ -37,7 +37,7 @@ class GameScene extends TypedClass {
         this.updateAll(o.children, eventName, delta);
       }
       if (typeof o[eventName] === "function") {
-        o[eventName].call(this, delta);
+        o[eventName](delta);
       }
     });
   }

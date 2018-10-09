@@ -2,7 +2,7 @@ import { Object3D } from "three";
 import { FeaturedClass } from "../Core";
 
 class EmptyObject extends FeaturedClass(Object3D) {
-  constructor(args) {
+  constructor(args = {}) {
     super(args);
 
     // Object.assign(

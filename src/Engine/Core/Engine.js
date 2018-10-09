@@ -6,6 +6,7 @@ import { Pointer } from "../Control";
 import MouseTracker from "./MouseTracker";
 import UI from "./UI2";
 import TypedClass from "./TypedClass";
+import FeaturedClass from "./FeaturedClass";
 import { EVENTS as fns } from "./Const";
 
 class Game extends TypedClass {
