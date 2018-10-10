@@ -9,7 +9,8 @@ export default class Pointer {
     this.state = state;
     this.state.pointer = {
       collision: [],
-      intersects: []
+      intersects: [],
+      intersectsUI: []
     };
 
     const xyPlaneGeo = new PlaneBufferGeometry(1000, 1000);
@@ -39,11 +40,30 @@ export default class Pointer {
     if (this.elapsed > this.delay) {
       this.elapsed = 0;
 
+      // UI CAM
+
+      this.raycaster.setFromCamera(
+        this.state.mouse.normalPos,
+        this.state.refs.UI.camera
+      );
+
+      // UI INTERSECT
+      const castableUI = this.getRayCastableObjects(
+        this.state.refs.UI.scene.children
+      );
+      // console.log(castableUI);
+
+      const intersectsUI = this.raycaster.intersectObjects(castableUI);
+      this.state.pointer.intersectsUI = intersectsUI;
+      if (intersectsUI.length) return null;
+
+      // Scene CAM
       this.raycaster.setFromCamera(
         this.state.mouse.normalPos,
         this.state.refs.camera
       );
 
+      // SCENE
       const castable = this.getRayCastableObjects(
         this.state.refs.scene.scene.children
       );
@@ -51,6 +71,7 @@ export default class Pointer {
       const intersects = this.raycaster.intersectObjects(castable);
       this.state.pointer.intersects = intersects;
 
+      // GROUND
       const collision = this.raycaster.intersectObject(this.xyPlane);
       this.state.pointer.collision = collision;
     }

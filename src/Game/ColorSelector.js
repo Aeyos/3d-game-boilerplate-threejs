@@ -63,6 +63,13 @@ class ColorSelector extends EmptyObject {
   }
 
   onUpdate() {
+    this.children.forEach(c => (c.scale.x = c.scale.y = 64));
+    if (this.$gameState.pointer.intersectsUI.length) {
+      const UIEl = this.$gameState.pointer.intersectsUI[0];
+      // console.log(UIEl)
+      UIEl.object.scale.x = UIEl.object.scale.y = 84;
+    }
+
     if (this.$gameState.mouse.mouseClickLeft) {
       this.animation.play("wut");
     }
