@@ -11,9 +11,9 @@ export default defClass =>
       // });
 
       this.ignoreMouseTrace = Boolean(featuredArgs.ignoreMouseTrace);
-      if (window.$state) {
-        this.$gameState = window.$state;
-      }
+      // if (window.$state) {
+      //   this.$gameState = window.$state;
+      // }
     }
 
     attach(component) {

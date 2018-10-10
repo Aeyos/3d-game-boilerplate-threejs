@@ -89,6 +89,8 @@ class Game extends TypedClass {
   setScene(scene) {
     this.scene = scene;
     this.state.refs.scene = this.scene;
+    this.scene.$engine = this;
+    this.scene.refChildren();
   }
 
   handleInput(deltaSec) {

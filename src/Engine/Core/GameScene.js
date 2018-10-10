@@ -2,6 +2,7 @@ import { Scene } from "three";
 import TypedClass from "./TypedClass";
 import { EVENTS } from "./Const";
 import { Collection } from "../Utils";
+import { ForAllChildren } from "../Utils/ThreeHelpers";
 
 class GameScene extends TypedClass {
   constructor(args) {
@@ -19,7 +20,17 @@ class GameScene extends TypedClass {
     });
   }
 
+  refChildren($engine) {
+    ForAllChildren(this.scene.children, obj => {
+      obj.$gameState = this.$engine.state;
+    });
+  }
+
   add(obj) {
+    if (this.$engine) {
+      obj.$gameState = this.$engine.state;
+    }
+
     this.scene.add(obj);
 
     this.objects.push(obj);

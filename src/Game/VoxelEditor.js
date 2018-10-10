@@ -28,34 +28,47 @@ class VoxelEditor extends EmptyObject {
           l: 1.001, // l: 1.025,
           opacity: 1
         });
-        newBox.attach(new Animation());
-        newBox.animation.register(
-          "hue",
-          {
-            loops: "infinite",
-            easing: "linear",
-            duration: 2500
-          },
-          anim => {
-            newBox.scale.x = newBox.scale.y = newBox.scale.z =
-              Math.sin(anim.progress * Math.PI * 2) * 0.25 + 0.75;
-          }
-        );
-        newBox.animation.play("hue");
-        newBox.animation.register(
-          "pulse",
-          {
-            loops: "infinite",
-            easing: "linear",
-            duration: 5000
-          },
-          anim => {
-            newBox.material.color = new Color(
-              `hsl(${anim.progress * 360}, 80%, 80%)`
-            );
-          }
-        );
-        newBox.animation.play("pulse");
+        // newBox.attach(new Animation());
+        // newBox.animation.register(
+        //   "hue",
+        //   {
+        //     loops: "infinite",
+        //     easing: "linear",
+        //     duration: 2500
+        //   },
+        //   anim => {
+        //     newBox.scale.x = newBox.scale.y = newBox.scale.z =
+        //       Math.sin(anim.progress * Math.PI * 2) * 0.25 + 0.75;
+        //   }
+        // );
+        // newBox.animation.play("hue");
+        // newBox.animation.register(
+        //   "pulse",
+        //   {
+        //     loops: "infinite",
+        //     easing: "linear",
+        //     duration: 5000
+        //   },
+        //   anim => {
+        //     newBox.material.color = new Color(
+        //       `hsl(${anim.progress * 360}, 80%, 80%)`
+        //     );
+        //   }
+        // );
+        // newBox.animation.play("pulse");
+        // newBox.animation.register(
+        //   "rotate",
+        //   {
+        //     loops: "infinite",
+        //     easing: "linear",
+        //     duration: 2000
+        //   },
+        //   anim => {
+        //     newBox.rotation.x = newBox.rotation.y = newBox.rotation.z =
+        //       Math.PI * 2 * anim.progress;
+        //   }
+        // );
+        // newBox.animation.play("rotate");
         this.add(newBox);
       }
     } else if (

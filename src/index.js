@@ -31,12 +31,12 @@ const voxelEditor = new VoxelEditor();
 // SPRITE
 const colorSelector = new ColorSelector();
 
-game.UI.add(colorSelector);
-
 mainScene.add(box);
 mainScene.add(grid);
 mainScene.add(lightBox);
 mainScene.add(voxelEditor);
+
+game.UI.add(colorSelector);
 
 game.setScene(mainScene);
 

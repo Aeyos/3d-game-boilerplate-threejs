@@ -24,9 +24,11 @@ class UI {
     );
 
     this.scene = new Scene();
+    this.$engine = engine;
   }
 
   add(object) {
+    object.$gameState = this.$engine.state;
     this.scene.add(object);
   }
 
