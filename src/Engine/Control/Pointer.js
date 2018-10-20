@@ -26,7 +26,7 @@ export default class Pointer {
   getRayCastableObjects(obj) {
     const castable = obj.filter(e => !e.ignoreMouseTrace);
     obj.forEach(o => {
-      if (o.ignoreMouseTrace) return;
+      if (o.ignoreMouseTrace || !o.visible) return;
       if (o.children.length) {
         castable.push(...this.getRayCastableObjects(o.children));
       }
@@ -51,11 +51,14 @@ export default class Pointer {
       const castableUI = this.getRayCastableObjects(
         this.state.refs.UI.scene.children
       );
-      // console.log(castableUI);
 
       const intersectsUI = this.raycaster.intersectObjects(castableUI);
       this.state.pointer.intersectsUI = intersectsUI;
-      if (intersectsUI.length) return null;
+      if (intersectsUI.length) {
+        this.state.pointer.intersects = [];
+        this.state.pointer.collision = [];
+        return null;
+      }
 
       // Scene CAM
       this.raycaster.setFromCamera(

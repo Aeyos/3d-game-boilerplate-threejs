@@ -1,9 +1,16 @@
-import { Color, Clock, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import {
+  Color,
+  Clock,
+  PerspectiveCamera,
+  Scene,
+  Vector2,
+  WebGLRenderer
+} from "three";
 
-import CameraControls from "../Control/CameraControls";
+import CameraControls from "../Control/CameraControls2";
 import Types from "../Utils/Types";
 import { Pointer } from "../Control";
-import MouseTracker from "./MouseTracker";
+import { Keyboard, Mouse } from "../Control";
 import UI from "./UI2";
 import TypedClass from "./TypedClass";
 import FeaturedClass from "./FeaturedClass";
@@ -38,10 +45,8 @@ class Game extends TypedClass {
       this.config.far
     );
     // - Controls
-    this.cameraControls = new CameraControls(this.camera, camera => {
-      this.state.camera = camera;
-    });
-    this.mouseTracker = new MouseTracker(this.state);
+    this.mouse = new Mouse(this.state);
+    this.keyboard = new Keyboard(this.state);
     this.pointer = new Pointer(this.state, 0.05);
     this.clock = new Clock();
     this.UI = new UI(this);
@@ -57,6 +62,9 @@ class Game extends TypedClass {
       renderer: this.renderer,
       UI: this.UI
     };
+
+    // - Controls
+    this.cameraControls = new CameraControls(this.state);
 
     // EVENTS
     this.renderer.domElement.oncontextmenu = () => false;
@@ -81,6 +89,9 @@ class Game extends TypedClass {
     delete this.clock;
     delete this.scene;
 
+    this.mouse.destroy();
+    this.keyboard.destroy();
+
     if (this.renderer) {
       this.renderer.dispose();
     }
@@ -94,21 +105,11 @@ class Game extends TypedClass {
   }
 
   handleInput(deltaSec) {
-    if (this.state.mouse.mouseUpLeft) {
-      this.state.mouse.mouseUpLeft = false;
-      this.state.mouse.mouseClickLeft = true;
-    } else if (this.state.mouse.mouseClickLeft) {
-      this.state.mouse.mouseClickLeft = false;
-    }
-
-    if (this.state.mouse.mouseUpRight) {
-      this.state.mouse.mouseUpRight = false;
-      this.state.mouse.mouseClickRight = true;
-    } else if (this.state.mouse.mouseClickRight) {
-      this.state.mouse.mouseClickRight = false;
-    }
+    this.keyboard.update(deltaSec);
 
     this.pointer.update(deltaSec);
+
+    this.cameraControls.update(deltaSec);
   }
   handleCollision(deltaSec) {}
   handleAnimation(deltaSec) {
@@ -125,6 +126,9 @@ class Game extends TypedClass {
   handleUpdate(deltaSec) {}
   handleUI(deltaSec) {
     this.UI.update();
+  }
+  handleLoopEnd(deltaSec) {
+    this.mouse.loopEnd();
   }
 
   loop() {
@@ -151,6 +155,9 @@ class Game extends TypedClass {
       // Render scene
       this.renderer.render(this.scene.scene, this.camera);
       this.UI.render(this.renderer);
+
+      // Clean-up, prepare
+      this.handleLoopEnd();
 
       // Schedule the next frame.
       requestAnimationFrame(this.loop.bind(this));

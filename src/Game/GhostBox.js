@@ -1,4 +1,4 @@
-import { Vector3 } from "three";
+import { Color, Vector3 } from "three";
 import { Box } from "../Engine";
 
 class GhostBox extends Box {
@@ -18,6 +18,9 @@ class GhostBox extends Box {
     const point =
       this.$gameState.pointer.intersects[0] ||
       this.$gameState.pointer.collision[0];
+
+    this.material.color = new Color(this.$gameState.selectedColor);
+
     if (point) {
       this.position.x = Math.round(point.point.x + 0.5) - 0.5;
       this.position.y = Math.round(Math.max(0.01, point.point.y) + 0.5) - 0.5;

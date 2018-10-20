@@ -17,7 +17,7 @@ class VoxelEditor extends EmptyObject {
         this.$gameState.pointer.collision[0];
       if (point) {
         const newBox = new Box({
-          color: Math.random() * 0xffffff,
+          color: this.$gameState.selectedColor,
           pos: new Vector3(
             Math.round(point.point.x + 0.5) - 0.5,
             Math.round(point.point.y + 0.51) - 0.5,

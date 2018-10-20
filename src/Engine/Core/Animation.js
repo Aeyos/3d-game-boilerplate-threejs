@@ -72,6 +72,8 @@ class Animation extends TypedClass {
       iteration: 0,
       playing: true
     });
+
+    this.animations[name].fn(this.animations[name].args);
   }
 }
 

@@ -8,7 +8,7 @@ window.$hmr = window.$hmr || {};
 const game = new Engine({
   width: document.body.clientWidth,
   height: document.body.clientHeight,
-  viewAngle: 45,
+  viewAngle: 68,
   nearPlane: 0.1,
   farPlane: 10000,
   container: document.querySelector("#container")
@@ -30,6 +30,8 @@ const voxelEditor = new VoxelEditor();
 
 // SPRITE
 const colorSelector = new ColorSelector();
+
+game.state.selectedColor = "#FFF";
 
 mainScene.add(box);
 mainScene.add(grid);
