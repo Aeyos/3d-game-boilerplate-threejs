@@ -1,7 +1,13 @@
 import { Color, Vector3 } from "three";
 import { Animation, Engine, GameScene } from "./Engine/Core";
 import { Box, EmptyObject, Grid, LightBox, Sprite } from "./Engine/Objects";
-import { ColorSelector, GhostBox, FloorGrid, VoxelEditor } from "./Game";
+import {
+  ColorSelector,
+  GhostBox,
+  FloorGrid,
+  RefpointLine,
+  VoxelEditor
+} from "./Game";
 
 window.$hmr = window.$hmr || {};
 
@@ -31,12 +37,16 @@ const voxelEditor = new VoxelEditor();
 // SPRITE
 const colorSelector = new ColorSelector();
 
+// CAMERA REFPOINT
+const refpointLine = new RefpointLine();
+
 game.state.selectedColor = "#FFF";
 
 mainScene.add(box);
 mainScene.add(grid);
 mainScene.add(lightBox);
 mainScene.add(voxelEditor);
+mainScene.add(refpointLine);
 
 game.UI.add(colorSelector);
 

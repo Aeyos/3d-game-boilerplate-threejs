@@ -13,7 +13,7 @@ export default class Pointer {
       intersectsUI: []
     };
 
-    const xyPlaneGeo = new PlaneBufferGeometry(1000, 1000);
+    const xyPlaneGeo = new PlaneBufferGeometry(999999, 999999);
     xyPlaneGeo.rotateX(-Math.PI / 2);
     this.xyPlane = new Mesh(
       xyPlaneGeo,

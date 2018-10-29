@@ -65,6 +65,7 @@ class Game extends TypedClass {
 
     // - Controls
     this.cameraControls = new CameraControls(this.state);
+    this.state.cameraControls = this.cameraControls;
 
     // EVENTS
     this.renderer.domElement.oncontextmenu = () => false;

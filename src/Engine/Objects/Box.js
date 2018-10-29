@@ -1,5 +1,5 @@
 import { MeshLambertMaterial, Mesh, BoxGeometry, Vector3 } from "three";
-import { FeaturedClass, GameObject } from "../Core";
+import FeaturedClass from "../Core/FeaturedClass";
 
 class Box extends FeaturedClass(Mesh) {
   constructor(args) {

@@ -1,10 +1,10 @@
 import { Vector2, Vector3 } from "three";
 import { Between } from "../Utils/Math";
+import { Box } from "../Objects";
 
 class CameraControls {
   constructor(globalState) {
     this.globalState = globalState;
-    console.log("globalState", globalState);
 
     // Declaration
     this.pressingLeft = false;
@@ -18,111 +18,8 @@ class CameraControls {
       Object.assign(this, window.$hmr.camera);
     }
 
-    // Action
     this.pivot(new Vector2());
-    // this.sendUpdate();
   }
-
-  // mouseDown(evt) {
-  //     evt.preventDefault();
-
-  //     if (evt.button === 0) {
-  //       this.pressingRight = true;
-
-  //       this.dragStart = new Vector2(evt.clientX, evt.clientY);
-  //     }
-
-  //     if (evt.button === 1) {
-  //       this.pressingMiddle = true;
-
-  //       this.dragStart = new Vector2(evt.clientX, evt.clientY);
-  //     }
-
-  //     if (evt.button === 2) {
-  //       this.pressingLeft = true;
-
-  //       this.dragStart = new Vector2(evt.clientX, evt.clientY);
-  //     }
-
-  //     this.sendUpdate();
-
-  //     return false;
-  //   }
-
-  //   mouseUp(evt) {
-  //     evt.preventDefault();
-
-  //     if (evt.button === 0) {
-  //       this.pressingRight = false;
-  //     }
-
-  //     if (evt.button === 1) {
-  //       this.pressingMiddle = false;
-  //     }
-
-  //     if (evt.button === 2) {
-  //       this.pressingLeft = false;
-
-  //       const deltaX = evt.clientX - this.dragStart.x;
-  //       const deltaY = evt.clientY - this.dragStart.y;
-
-  //       this.currentYaw = this.currentYaw + deltaX / 200;
-  //       this.currentPitch = Between(
-  //         this.currentPitch + deltaY / 200,
-  //         Math.PI / 2,
-  //         Math.PI - 0.01
-  //       );
-  //     }
-
-  //     this.sendUpdate();
-
-  //     return false;
-  //   }
-
-  //   mouseMove(evt) {
-  //     evt.preventDefault();
-
-  //     if (this.pressingLeft && this.cameraRef) {
-  //       const deltaX = evt.clientX - this.dragStart.x;
-  //       const deltaY = evt.clientY - this.dragStart.y;
-
-  //       this.pivot(deltaX, deltaY);
-  //     }
-
-  //     if (this.pressingMiddle && this.cameraRef) {
-  //       const deltaY = evt.clientY - this.dragStart.y;
-
-  //       this.dragStart.y = evt.clientY;
-
-  //       this.ascend(-deltaY);
-  //     }
-
-  //     if (this.pressingRight && this.cameraRef) {
-  //       const deltaX = evt.clientX - this.dragStart.x;
-  //       const deltaY = evt.clientY - this.dragStart.y;
-
-  //       this.dragStart.x = evt.clientX;
-  //       this.dragStart.y = evt.clientY;
-
-  //       this.move(deltaX, deltaY);
-  //     }
-
-  //     this.sendUpdate();
-
-  //     return false;
-  //   }
-
-  //   mouseWheel(evt) {
-  //     evt.preventDefault();
-  //     this.armLength -=
-  //       (evt.wheelDeltaY / 30) * (Math.max(0.5, this.armLength) * 0.05);
-  //     this.armLength = Math.max(0.00001, this.armLength);
-  //     this.pivot(0, 0);
-
-  //     this.sendUpdate();
-
-  //     return false;
-  //   }
 
   pivot(delta) {
     // x = ρ sin φ * cos θ
@@ -132,7 +29,7 @@ class CameraControls {
     this.currentYaw = angleX;
     const angleY = Between(
       this.currentPitch + delta.y / 200,
-      Math.PI / 2,
+      0.01,
       Math.PI - 0.01
     );
     this.currentPitch = angleY;
@@ -161,18 +58,7 @@ class CameraControls {
   ascend(deltaY) {
     this.refPoint.y += deltaY / 50;
 
-    this.pivot(0, 0);
-  }
-
-  sendUpdate() {
-    this.onUpdate({
-      pressingLeft: this.pressingLeft,
-      dragStart: this.dragStart,
-      refPoint: this.refPoint,
-      currentYaw: this.currentYaw,
-      currentPitch: this.currentPitch,
-      armLength: this.armLength
-    });
+    this.pivot(new Vector2());
   }
 
   update(deltaSec) {
@@ -183,7 +69,23 @@ class CameraControls {
       this.pivot(mouse.dragDelta);
     }
 
+    if (mouse.scrollY) {
+      this.armLength +=
+        (mouse.scrollY / 30) * (Math.max(0.5, this.armLength) * 0.05);
+      this.armLength = Math.max(0.00001, this.armLength);
+
+      this.pivot(new Vector2());
+    }
+
     let speed = 20;
+
+    if (keyboard.Space.pressed) {
+      this.ascend(speed);
+    }
+    if (keyboard.ControlLeft.pressed) {
+      this.ascend(-speed);
+    }
+
     if (
       keyboard.KeyA.pressed &&
       (keyboard.KeyW.pressed || keyboard.KeyS.pressed)

@@ -4,7 +4,7 @@ import { TARGETS } from "../Core/Const";
 
 export default class Mouse {
   constructor(state) {
-    this.stateRef = state;
+    state.mouse = this;
 
     this.mouseDown = this.mouseDown.bind(this);
     this.mouseUp = this.mouseUp.bind(this);
@@ -30,17 +30,6 @@ export default class Mouse {
     this.pos = new Vector2(0, 0);
     this.normalPos = new Vector2(0, 0);
     this.target = TARGETS.WORLD;
-
-    state.mouse = {
-      mouseLeft: this.mouseLeft,
-      mouseUpLeft: this.mouseLeft,
-      mouseRight: this.mouseRight,
-      dragStart: this.dragStart,
-      dragStep: this.dragStep,
-      dragDelta: this.dragDelta,
-      pos: this.pos,
-      normalPos: this.normalPos
-    };
   }
 
   destroy() {
@@ -52,30 +41,25 @@ export default class Mouse {
   }
 
   mouseDown(evt) {
+    console.log("MOUSE DOWNNNNNNNNNNNNNNNNNNNNNN!!!!!!!!!!!!!");
     evt.preventDefault();
 
     if (evt.button === 0) {
       this.mouseLeft = true;
       this.dragStart.x = evt.clientX;
       this.dragStart.y = evt.clientY;
-      // State
-      this.stateRef.mouse.mouseLeft = this.mouseLeft;
     }
 
     if (evt.button === 1) {
       this.mouseMiddle = true;
       this.dragStart.x = evt.clientX;
       this.dragStart.y = evt.clientY;
-      // State
-      this.stateRef.mouse.mouseMiddle = this.mouseMiddle;
     }
 
     if (evt.button === 2) {
       this.mouseRight = true;
       this.dragStart.x = evt.clientX;
       this.dragStart.y = evt.clientY;
-      // State
-      this.stateRef.mouse.mouseRight = this.mouseRight;
     }
 
     return false;
@@ -86,39 +70,32 @@ export default class Mouse {
 
     if (evt.button === 0) {
       this.mouseLeft = false;
+      this.mouseUpLeft = true;
 
-      if (Math.abs(this.dragStep.x) <= 5 && Math.abs(this.dragStep.y) <= 5) {
-        this.mouseUpLeft = true;
-        this.stateRef.mouse.mouseUpLeft = this.mouseUpLeft;
+      if (!this.isDragging) {
+        this.mouseClickLeft = true;
       }
-
-      this.stateRef.mouse.mouseLeft = this.mouseLeft;
-      this.resetDrag();
     }
 
     if (evt.button === 1) {
       this.mouseMiddle = false;
+      this.mouseUpMiddle = true;
 
-      if (Math.abs(this.dragStep.x) <= 5 && Math.abs(this.dragStep.y) <= 5) {
-        this.mouseUpMiddle = true;
-        this.stateRef.mouse.mouseUpMiddle = this.mouseUpMiddle;
+      if (!this.isDragging) {
+        this.mouseClickMiddle = true;
       }
-
-      this.stateRef.mouse.mouseMiddle = this.mouseMiddle;
-      this.resetDrag();
     }
 
     if (evt.button === 2) {
       this.mouseRight = false;
+      this.mouseUpRight = true;
 
-      if (Math.abs(this.dragStep.x) <= 5 && Math.abs(this.dragStep.y) <= 5) {
-        this.mouseUpRight = true;
-        this.stateRef.mouse.mouseUpRight = this.mouseUpRight;
+      if (!this.isDragging) {
+        this.mouseClickRight = true;
       }
-
-      this.stateRef.mouse.mouseRight = this.mouseRight;
-      this.resetDrag();
     }
+
+    this.resetDrag();
 
     return false;
   }
@@ -134,6 +111,12 @@ export default class Mouse {
       this.dragStep.y = evt.clientY - this.dragStart.y;
     }
 
+    if (Math.abs(this.dragStep.x) >= 5 || Math.abs(this.dragStep.y) >= 5) {
+      this.isDragging = true;
+    } else if (!this.isDragging) {
+      this.isDragging = false;
+    }
+
     this.pos.x = evt.clientX;
     this.pos.y = evt.clientY;
 
@@ -144,33 +127,26 @@ export default class Mouse {
   }
 
   resetDrag() {
+    this.isDragging = false;
     this.dragStart.x = this.dragStart.y = this.dragStep.x = this.dragStep.y = this.dragDelta.x = this.dragDelta.y = -1;
   }
 
   mouseWheel(evt) {
     evt.preventDefault();
 
-    console.log(evt);
+    this.scrollX = evt.deltaX;
+    this.scrollY = evt.deltaY;
 
     return false;
   }
 
   loopEnd() {
-    if (this.mouseUpLeft) {
-      this.mouseUpLeft = this.stateRef.mouse.mouseUpLeft = false;
-      this.stateRef.mouse.mouseClickLeft = true;
-    } else if (this.stateRef.mouse.mouseClickLeft) {
-      this.stateRef.mouse.mouseClickLeft = false;
-    }
-
-    if (this.mouseUpRight) {
-      this.mouseUpRight = this.stateRef.mouse.mouseUpRight = false;
-      this.stateRef.mouse.mouseClickRight = true;
-    } else if (this.stateRef.mouse.mouseClickRight) {
-      this.stateRef.mouse.mouseClickRight = false;
-    }
+    this.mouseUpLeft = this.mouseClickLeft = this.mouseUpMiddle = this.mouseClickMiddle = this.mouseUpRight = this.mouseClickRight = false;
 
     this.dragDelta.x = 0;
     this.dragDelta.y = 0;
+
+    this.scrollX = 0;
+    this.scrollY = 0;
   }
 }

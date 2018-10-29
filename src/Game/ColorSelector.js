@@ -32,7 +32,7 @@ class ColorSelector extends EmptyObject {
             );
             if (j === this.gridsize - 1) {
               ctx.fillStyle = `hsl(0, 0%, ${(this.gridsize - 1 - i) *
-                (100 / this.gridsize)}%)`;
+                (100 / (this.gridsize - 1))}%)`;
             } else {
               ctx.fillStyle = `hsl(${i *
                 Math.round(360 / this.gridsize)}, 90%, ${(j + 1) *
