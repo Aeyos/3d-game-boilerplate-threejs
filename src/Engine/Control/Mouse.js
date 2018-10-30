@@ -41,7 +41,6 @@ export default class Mouse {
   }
 
   mouseDown(evt) {
-    console.log("MOUSE DOWNNNNNNNNNNNNNNNNNNNNNN!!!!!!!!!!!!!");
     evt.preventDefault();
 
     if (evt.button === 0) {

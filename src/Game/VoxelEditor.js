@@ -109,7 +109,7 @@ class VoxelEditor extends EmptyObject {
       const deltaX = Math.round(point.point.x - this.dragStart.x);
       const deltaY = Math.max(0, Math.round(point.point.y - this.dragStart.y));
       const deltaZ = Math.round(point.point.z - this.dragStart.z);
-      console.log(deltaY);
+
       this.dragBox.scale.x = Math.round(1 + Math.abs(deltaX));
       this.dragBox.scale.y = Math.round(1 + Math.abs(deltaY));
       this.dragBox.scale.z = Math.round(1 + Math.abs(deltaZ));
