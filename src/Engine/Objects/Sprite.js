@@ -11,11 +11,8 @@ class AugmentedSprite extends FeaturedClass(Sprite) {
       map: spriteMap,
       color: 0xffffff
     });
-    super(args, spriteMaterial);
-    // this.spriteMap = spriteMap;
-    // this.spriteMaterial = spriteMaterial;
 
-    // this.collision = new Collision2D();
+    super(args, spriteMaterial);
   }
 }
 export default AugmentedSprite;

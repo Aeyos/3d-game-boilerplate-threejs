@@ -11,7 +11,7 @@ import CameraControls from "../Control/CameraControls2";
 import Types from "../Utils/Types";
 import { Pointer } from "../Control";
 import { Keyboard, Mouse } from "../Control";
-import UI from "./UI2";
+import UI from "./UI";
 import TypedClass from "./TypedClass";
 import FeaturedClass from "./FeaturedClass";
 import { EVENTS as fns } from "./Const";
