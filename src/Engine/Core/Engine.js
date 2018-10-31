@@ -115,7 +115,7 @@ class Game extends TypedClass {
   handleCollision(deltaSec) {}
   handleAnimation(deltaSec) {
     if (this.scene) {
-      this.updateAll(this.scene.scene.children, deltaSec);
+      this.updateAll(this.scene.children, deltaSec);
     }
     if (this.UI) {
       this.updateAll(this.UI.scene.children, deltaSec);
@@ -134,6 +134,7 @@ class Game extends TypedClass {
 
   loop() {
     if (this.isDestroyed) return;
+    if (!this.scene) return;
 
     try {
       const delta = this.clock.getDelta();
@@ -143,18 +144,23 @@ class Game extends TypedClass {
         if (typeof this[`onBefore${fn}`] === "function") {
           this[`onBefore${fn}`].call(this, delta);
         }
+
         // ENGINE "HANDLE" EVENT
         this[`handle${fn}`].call(this, delta);
+
         // ENGINE "ON" EVENT
         if (typeof this[`on${fn}`] === "function") {
           this[`on${fn}`].call(this, delta);
         }
+
         // SCENE "ON" EVENT
-        this.scene[`on${fn}`].call(this, delta);
+        if (typeof this.scene[`on${fn}`] === "function") {
+          this.scene[`on${fn}`].call(this, delta);
+        }
       });
 
       // Render scene
-      this.renderer.render(this.scene.scene, this.camera);
+      this.renderer.render(this.scene, this.camera);
       this.UI.render(this.renderer);
 
       // Clean-up, prepare

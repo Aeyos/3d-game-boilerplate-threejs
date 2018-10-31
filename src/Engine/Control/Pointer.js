@@ -37,11 +37,11 @@ export default class Pointer {
 
   update(delta) {
     this.elapsed += delta;
+
     if (this.elapsed > this.delay) {
       this.elapsed = 0;
 
       // UI CAM
-
       this.raycaster.setFromCamera(
         this.state.mouse.normalPos,
         this.state.refs.UI.camera
@@ -68,7 +68,7 @@ export default class Pointer {
 
       // SCENE
       const castable = this.getRayCastableObjects(
-        this.state.refs.scene.scene.children
+        this.state.refs.scene.children
       );
 
       const intersects = this.raycaster.intersectObjects(castable);

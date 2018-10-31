@@ -1,19 +1,11 @@
-import { EVENTS } from "../Core/Const";
-import { noop, Collection } from "../Utils";
-
 export default defClass =>
   class FeaturedClass extends defClass {
     constructor(featuredArgs, ...args) {
       super(...args);
 
-      // EVENTS.forEach(e => {
-      //   this[`before${e}`] = this[`on${e}`] = noop;
-      // });
+      const fargs = featuredArgs || {};
 
-      this.ignoreMouseTrace = Boolean(featuredArgs.ignoreMouseTrace);
-      // if (window.$state) {
-      //   this.$gameState = window.$state;
-      // }
+      this.ignoreMouseTrace = Boolean(fargs.ignoreMouseTrace);
     }
 
     attach(component) {

@@ -1,16 +1,9 @@
-import { Engine, GameScene } from "./Engine/Core";
-import { LightBox } from "./Engine/Objects";
-import {
-  ColorSelector,
-  GhostBox,
-  FloorGrid,
-  RefpointLine,
-  VoxelEditor
-} from "./Game";
+import { Engine } from "./Engine";
+import { Game } from "./Game";
 
 window.$hmr = window.$hmr || {};
 
-const game = new Engine({
+const engine = new Engine({
   width: document.body.clientWidth,
   height: document.body.clientHeight,
   viewAngle: 68,
@@ -19,43 +12,11 @@ const game = new Engine({
   container: document.querySelector("#container")
 });
 
-const mainScene = new GameScene();
-
-// BOX
-const box = new GhostBox();
-
-// GRID
-const grid = new FloorGrid();
-
-// LIGHTS
-const lightBox = new LightBox({ ignoreMouseTrace: true });
-
-// VOXELS
-const voxelEditor = new VoxelEditor();
-
-// SPRITE
-const colorSelector = new ColorSelector();
-
-// CAMERA REFPOINT
-const refpointLine = new RefpointLine();
-
-game.state.selectedColor = "#FFF";
-
-mainScene.add(box);
-mainScene.add(grid);
-mainScene.add(lightBox);
-mainScene.add(voxelEditor);
-mainScene.add(refpointLine);
-
-game.UI.add(colorSelector);
-
-game.setScene(mainScene);
+const game = new Game({ engine });
 
 if (module.hot) {
   module.hot.dispose(() => {
-    window.$hmr.voxels = voxelEditor;
-    window.$hmr.camera = game.state.camera || window.$hmr.camera;
-    game.destroy();
+    engine.destroy();
   });
 }
 
@@ -75,4 +36,4 @@ if (!console.log.isModified) {
   console.log.isModified = true;
 }
 
-window.$game = game;
+window.$engine = engine;
