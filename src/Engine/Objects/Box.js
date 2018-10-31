@@ -4,15 +4,12 @@ import FeaturedClass from "../Core/FeaturedClass";
 class Box extends FeaturedClass(Mesh) {
   constructor(args) {
     const defaultArgs = {
-      radius: 10,
-      segments: 16,
-      rignt: 8,
-      color: 0xcc0000,
-      pos: new Vector3(0, 0, -300),
-      w: 10,
-      h: 10,
-      l: 10,
-      opacity: 0.1
+      color: 0xffffff,
+      pos: new Vector3(0, 0, 0),
+      w: 2,
+      h: 2,
+      l: 2,
+      opacity: 1
     };
 
     const boxArgs = { ...defaultArgs, ...args };
