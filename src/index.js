@@ -1,6 +1,5 @@
-import { Color, Vector3 } from "three";
-import { Animation, Engine, GameScene } from "./Engine/Core";
-import { Box, EmptyObject, Grid, LightBox, Sprite } from "./Engine/Objects";
+import { Engine, GameScene } from "./Engine/Core";
+import { LightBox } from "./Engine/Objects";
 import {
   ColorSelector,
   GhostBox,
