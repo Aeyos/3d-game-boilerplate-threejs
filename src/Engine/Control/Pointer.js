@@ -1,7 +1,5 @@
 import { Mesh, PlaneBufferGeometry, MeshBasicMaterial, Raycaster } from "three";
 
-import { Collection } from "../Utils";
-
 export default class Pointer {
   constructor(state, delay) {
     this.elapsed = 0;

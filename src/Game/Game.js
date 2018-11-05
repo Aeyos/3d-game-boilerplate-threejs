@@ -11,6 +11,7 @@ class Game {
 
     this.box = new Box();
     this.light = new Light();
+    this.grid = new Grid();
 
     this.box.onUpdate = delta => {
       this.box.rotation.x += delta;
@@ -20,6 +21,7 @@ class Game {
 
     mainScene.add(this.box);
     mainScene.add(this.light);
+    mainScene.add(this.grid);
   }
 }
 

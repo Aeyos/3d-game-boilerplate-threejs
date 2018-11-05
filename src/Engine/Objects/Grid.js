@@ -1,5 +1,6 @@
 import { Geometry, LineDashedMaterial, Line, Vector3 } from "three";
 import EmptyObject from "./EmptyObject";
+import { BaseObject } from "../Core";
 
 class Grid extends EmptyObject {
   constructor(args) {
@@ -41,4 +42,4 @@ class Grid extends EmptyObject {
   }
 }
 
-export default Grid;
+export default BaseObject(Grid);

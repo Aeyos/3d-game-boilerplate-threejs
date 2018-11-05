@@ -23,6 +23,11 @@ export default function(customClass) {
       });
     }
 
-    return new customClass(args);
+    const { ignoreMouseTrace, ...classArgs } = args;
+    const obj = new customClass(...classArgs);
+
+    obj.ignoreMouseTrace = Boolean(ignoreMouseTrace);
+
+    return obj;
   };
 }

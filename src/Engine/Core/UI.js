@@ -1,13 +1,4 @@
-import {
-  Mesh,
-  MeshBasicMaterial,
-  OrthographicCamera,
-  PlaneGeometry,
-  Scene,
-  Texture
-} from "three";
-
-import { Collection } from "../Utils";
+import { OrthographicCamera, Scene } from "three";
 
 class UI {
   constructor(engine) {

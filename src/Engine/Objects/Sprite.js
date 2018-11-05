@@ -1,10 +1,7 @@
 import { SpriteMaterial, Sprite, TextureLoader, Vector2 } from "three";
-import { FeaturedClass, TypedClass, Collision2D } from "../Core";
-import { Collection } from "../Utils";
-import { MATHC } from "../Utils/Math";
-// import { Types } from "../Utils";
+import { BaseObject } from "../Core";
 
-class AugmentedSprite extends FeaturedClass(Sprite) {
+class AugmentedSprite extends Sprite {
   constructor(args) {
     const spriteMap = new TextureLoader().load(args.texture);
     const spriteMaterial = new SpriteMaterial({
@@ -15,4 +12,4 @@ class AugmentedSprite extends FeaturedClass(Sprite) {
     super(args, spriteMaterial);
   }
 }
-export default AugmentedSprite;
+export default BaseObject(AugmentedSprite);

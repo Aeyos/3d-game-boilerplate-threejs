@@ -1,11 +1,7 @@
-import TypedClass from "./TypedClass";
-import { Collection, Types } from "../Utils";
-import { PHASES } from "./Const";
+import { Collection } from "../Utils";
 
-class Collision2D extends TypedClass {
+class Collision2D {
   constructor(args) {
-    super(args);
-
     Object.assign(this, args);
 
     this.BPShapes = new Collection();

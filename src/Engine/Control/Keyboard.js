@@ -1,5 +1,4 @@
-import { Vector2 } from "three";
-import { KEYBOARD_KEYS, TARGETS } from "../Core/Const";
+import { KEYBOARD_KEYS } from "../Core/Const";
 
 export default class Keyboard {
   constructor(state) {

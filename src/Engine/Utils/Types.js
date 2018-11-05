@@ -7,7 +7,10 @@ const rename = (name, fn) => {
 
 export default {
   NotRequired: type =>
-    rename(`${type.name}, null`, o => (o ? type(o) : o === null)),
+    rename(
+      `${type.name}, null`,
+      o => (o ? type(o) : o === null || o === undefined)
+    ),
   OneOf: types =>
     rename(types.map(t => t.name).join(", "), o => types.some(type => type(o))),
 

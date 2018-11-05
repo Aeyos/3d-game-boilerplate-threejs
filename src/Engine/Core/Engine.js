@@ -1,11 +1,4 @@
-import {
-  Color,
-  Clock,
-  PerspectiveCamera,
-  Scene,
-  Vector2,
-  WebGLRenderer
-} from "three";
+import { Clock, PerspectiveCamera, WebGLRenderer } from "three";
 
 import CameraControls from "../Control/CameraControls2";
 import Types from "../Utils/Types";
@@ -13,16 +6,13 @@ import { Pointer } from "../Control";
 import { Keyboard, Mouse } from "../Control";
 import UI from "./UI";
 import TypedClass from "./TypedClass";
-import FeaturedClass from "./FeaturedClass";
 import { EVENTS as fns } from "./Const";
 
-class Game extends TypedClass {
+class Game {
   constructor(args) {
     if (!args) {
       throw new Error("Engine object requires arguments");
     }
-
-    super(args);
 
     // CONFIG
     this.config = args;
@@ -197,4 +187,4 @@ Game.argTypes = {
   container: Types.HTMLElement
 };
 
-export default Game;
+export default TypedClass(Game);

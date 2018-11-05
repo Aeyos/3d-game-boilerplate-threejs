@@ -1,10 +1,5 @@
-import TypedClass from "./TypedClass";
-import Types from "../Utils/Types";
-
-class Animation extends TypedClass {
+class Animation {
   constructor(args) {
-    super(args);
-
     Object.assign(this, args);
 
     this.propName = "animation";

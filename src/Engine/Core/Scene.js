@@ -1,12 +1,9 @@
 import { Scene } from "three";
-
-import { Collection } from "../Utils";
 import { ForAllChildren } from "../Utils/ThreeHelpers";
-
-import FeaturedClass from "./FeaturedClass";
 import { EVENTS } from "./Const";
+import BaseObject from "./BaseObject";
 
-class GameScene extends FeaturedClass(Scene) {
+class GameScene extends Scene {
   constructor(featureArgs, args) {
     super(args);
 
@@ -37,4 +34,4 @@ class GameScene extends FeaturedClass(Scene) {
 
 GameScene.argTypes = {};
 
-export default GameScene;
+export default BaseObject(GameScene);

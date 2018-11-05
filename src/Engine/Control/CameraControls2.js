@@ -1,6 +1,5 @@
 import { Vector2, Vector3 } from "three";
 import { Between } from "../Utils/Math";
-import { Box } from "../Objects";
 
 class CameraControls {
   constructor(globalState) {

@@ -1,33 +1,6 @@
 import { Object3D } from "three";
-import { FeaturedClass } from "../Core";
+import { BaseObject } from "../Core";
 
-class EmptyObject extends FeaturedClass(Object3D) {
-  constructor(args = {}) {
-    super(args);
+class EmptyObject extends Object3D {}
 
-    // Object.assign(
-    //   this,
-    //   {
-    //     geometry: null,
-    //     material: null,
-    //     mesh: new Object3D(),
-    //     // children: []
-    //   },
-    //   args
-    // );
-  }
-
-  // add(obj) {
-  //   this.children.push(obj);
-  //   this.mesh.add(obj.mesh);
-  // }
-
-  // remove(obj) {
-  //   this.mesh.remove(obj.mesh);
-  //   console.log(this.children);
-  //   this.children.remove(obj);
-  //   console.log(this.children);
-  // }
-}
-
-export default EmptyObject;
+export default BaseObject(EmptyObject);

@@ -1,8 +1,8 @@
 import { MeshLambertMaterial, Mesh, BoxGeometry, Vector3 } from "three";
-import FeaturedClass from "../Core/FeaturedClass";
+import { BaseObject } from "../Core";
 
-class Box extends FeaturedClass(Mesh) {
-  constructor(args) {
+class Box extends Mesh {
+  constructor(args = {}) {
     const defaultArgs = {
       color: 0xffffff,
       pos: new Vector3(0, 0, 0),
@@ -13,29 +13,23 @@ class Box extends FeaturedClass(Mesh) {
     };
 
     const boxArgs = { ...defaultArgs, ...args };
-    // Set up the box vars
+
+    // -- MATERIAL
     const boxMaterial = new MeshLambertMaterial({
       color: boxArgs.color,
-      transparent: true,
+      transparent: Boolean(args.opacity),
       opacity: boxArgs.opacity
     });
 
-    // Create a new mesh with
-    // box geometry - we will cover
-    // the boxMaterial next!
+    // -- GEOMETRY
     const boxGeometry = new BoxGeometry(boxArgs.w, boxArgs.h, boxArgs.l);
 
-    super(args, boxGeometry, boxMaterial);
+    // -- CREATE MESH
+    super(boxGeometry, boxMaterial);
 
-    this.castShadow = true;
-    this.receiveShadow = true;
-
+    // Set position
     Object.assign(this.position, boxArgs.pos);
-    this.geometry = boxGeometry;
-    this.material = boxMaterial;
-    // const { position, rotation, quaternion, scale, ...boxx } = box;
-    // Object.assign(this, boxx);
   }
 }
 
-export default Box;
+export default BaseObject(Box);
