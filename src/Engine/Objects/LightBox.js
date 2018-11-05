@@ -5,7 +5,7 @@ import { Gradient } from "../Utils";
 
 class LightBox extends EmptyObject {
   constructor(args) {
-    super(args || {});
+    super();
 
     const gradient = Gradient(0x99, 0xff, 5);
     const lightColors = gradient.map(e => e + e * 256 + e * 65536);

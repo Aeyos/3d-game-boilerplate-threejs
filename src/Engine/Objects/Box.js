@@ -2,7 +2,7 @@ import { MeshLambertMaterial, Mesh, BoxGeometry, Vector3 } from "three";
 import { BaseObject } from "../Core";
 
 class Box extends Mesh {
-  constructor(args = {}) {
+  constructor(args) {
     const defaultArgs = {
       color: 0xffffff,
       pos: new Vector3(0, 0, 0),

@@ -30,10 +30,42 @@ if (!console.log.isModified) {
       /^[\s\S]*?at[\s\S]*?at (.*?)\s(?:.*\/)(.*?)\)[\s\S]*$/gi,
       "@ $1 ($2)"
     );
-    console.clog(`%c${name}`, "background-color: hsl(0, 100%, 95%)");
+    console.clog(`%c${name}`, "background-color: hsl(180, 100%, 95%)");
     console.clog(...args);
   };
   console.log.isModified = true;
+}
+
+if (!console.warn.isModified) {
+  console.cwarn = console.warn;
+  console.warn = function(...args) {
+    const obj = {};
+    Error.captureStackTrace(obj);
+
+    const name = obj.stack.replace(
+      /^[\s\S]*?at[\s\S]*?at (.*?)\s(?:.*\/)(.*?)\)[\s\S]*$/gi,
+      "@ $1 ($2)"
+    );
+    console.cwarn(`%c${name}`, "background-color: hsl(90, 100%, 95%)");
+    console.cwarn(...args);
+  };
+  console.warn.isModified = true;
+}
+
+if (!console.error.isModified) {
+  console.cerror = console.error;
+  console.error = function(...args) {
+    const obj = {};
+    Error.captureStackTrace(obj);
+
+    const name = obj.stack.replace(
+      /^[\s\S]*?at[\s\S]*?at (.*?)\s(?:.*\/)(.*?)\)[\s\S]*$/gi,
+      "@ $1 ($2)"
+    );
+    console.cerror(`%c${name}`, "background-color: hsl(0, 100%, 95%)");
+    console.cerror(...args);
+  };
+  console.error.isModified = true;
 }
 
 window.$engine = engine;

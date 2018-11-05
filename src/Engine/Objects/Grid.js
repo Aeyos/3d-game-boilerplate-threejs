@@ -4,7 +4,7 @@ import { BaseObject } from "../Core";
 
 class Grid extends EmptyObject {
   constructor(args) {
-    super(args || {});
+    super(args);
 
     const material = new LineDashedMaterial({
       color: 0xffffff,

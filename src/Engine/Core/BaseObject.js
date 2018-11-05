@@ -24,7 +24,7 @@ export default function(customClass) {
     }
 
     const { ignoreMouseTrace, ...classArgs } = args;
-    const obj = new customClass(...classArgs);
+    const obj = new customClass(classArgs);
 
     obj.ignoreMouseTrace = Boolean(ignoreMouseTrace);
 

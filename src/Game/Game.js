@@ -1,4 +1,4 @@
-import { Box, Light, Grid, Scene } from "../Engine";
+import { Box, RGBLights, Grid, Scene } from "../Engine";
 
 class Game {
   constructor(args) {
@@ -10,17 +10,21 @@ class Game {
     this.engine.setScene(this.scenes[0]);
 
     this.box = new Box();
-    this.light = new Light();
+    this.lights = new RGBLights({ lightIntensity: 0.5, debug: true });
     this.grid = new Grid();
 
     this.box.onUpdate = delta => {
       this.box.rotation.x += delta;
-      this.box.rotation.y += delta * 1.5;
-      this.box.rotation.z += delta * 2;
+      this.box.rotation.y += delta;
+      this.box.rotation.z += delta;
+    };
+
+    this.lights.onUpdate = delta => {
+      this.lights.rotation.y -= delta * 1.5;
     };
 
     mainScene.add(this.box);
-    mainScene.add(this.light);
+    mainScene.add(this.lights);
     mainScene.add(this.grid);
   }
 }
